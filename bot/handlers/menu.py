@@ -40,7 +40,7 @@ async def show_menu(callback: CallbackQuery, state: FSMContext):
         cart_text = "🛒 Корзина пуста\n\n"
 
     await callback.message.edit_text(
-        f"👋 **Async Cafe Меню**\n\n{cart_text}Выберите товар:",
+        f"👋 **FastStream Cafe Меню**\n\n{cart_text}Выберите товар:",
         reply_markup=get_menu_keyboard(items),
         parse_mode="Markdown",
     )
