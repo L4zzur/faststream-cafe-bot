@@ -1,0 +1,29 @@
+[project]
+name = "faststream-cafe-bot"
+version = "0.1.0"
+description = "A cafe bot implementation using FastStream."
+readme = "README.md"
+authors = [
+    { name = "Popov Nikita", email = "popovnikita01@gmail.com" }
+]
+requires-python = ">=3.13"
+dependencies = []
+
+[dependency-groups]
+dev = [
+    "black>=26.1.0",
+    "isort>=7.0.0",
+]
+
+[tool.uv.workspace]
+members = [
+    "cashier",
+    "kitchen",
+    "bot",
+    "shared",
+]
+
+[tool.isort]
+profile = "black"
+line_length = 88
+known_first_party = ["shared", "cashier", "kitchen", "bot", "core", "api"]

@@ -1,0 +1,61 @@
+services:
+  rabbitmq:
+    image: rabbitmq:3-management
+    container_name: rabbitmq
+    ports:
+      - "5672:5672"
+      - "15672:15672"
+    healthcheck:
+      test: ["CMD", "rabbitmq-diagnostics", "-q", "check_port_connectivity"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+    environment:
+      RABBITMQ_DEFAULT_USER: "guest"
+      RABBITMQ_DEFAULT_PASS: "guest"
+
+  cashier:
+    build:
+      context: .
+      dockerfile: cashier/Dockerfile
+    container_name: faststream_cafe_cashier
+    ports:
+      - "${APP_PORT_CASHIER}:${APP_PORT_CASHIER}"
+    restart: on-failure
+    depends_on:
+      rabbitmq:
+        condition: service_healthy
+    # volumes:
+    #   - ./items.json:/app/order/items.json
+    environment:
+      APP_PORT: ${APP_PORT_CASHIER}
+      RABBIT_URL: "amqp://guest:guest@rabbitmq:5672/"
+
+  kitchen:
+    build:
+      context: .
+      dockerfile: kitchen/Dockerfile
+    container_name: faststream_cafe_kitchen
+    ports:
+      - "${APP_PORT_KITCHEN}:${APP_PORT_KITCHEN}"
+    restart: on-failure
+    depends_on:
+      rabbitmq:
+        condition: service_healthy
+    environment:
+      APP_PORT: ${APP_PORT_KITCHEN}
+      RABBIT_URL: "amqp://guest:guest@rabbitmq:5672/"
+
+  bot:
+    build:
+      context: .
+      dockerfile: bot/Dockerfile
+    container_name: faststream_cafe_bot
+    restart: on-failure
+    depends_on:
+      rabbitmq:
+        condition: service_healthy
+    environment:
+      RABBIT_URL: "${RABBIT_URL}"
+      CASHIER_API_URL: "http://cashier:${APP_PORT_CASHIER}/"
+      BOT_TOKEN: "${BOT_TOKEN}"

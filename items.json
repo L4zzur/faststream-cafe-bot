@@ -1,0 +1,37 @@
+[
+    {
+        "code": "espresso",
+        "icon": "☕️",
+        "name": "Эспрессо",
+        "price": 150,
+        "cooking_time": 15
+    },
+    {
+        "code": "cappuccino",
+        "icon": "☕️",
+        "name": "Капучино",
+        "price": 200,
+        "cooking_time": 25
+    },
+    {
+        "code": "tea",
+        "icon": "🫖",
+        "name": "Чай Эрл Грей",
+        "price": 100,
+        "cooking_time": 10
+    },
+    {
+        "code": "croissant",
+        "icon": "🥐",
+        "name": "Круассан",
+        "price": 120,
+        "cooking_time": 60
+    },
+    {
+        "code": "cookie",
+        "icon": "🍪",
+        "name": "Печенье",
+        "price": 80,
+        "cooking_time": 45
+    }
+]
