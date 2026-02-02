@@ -25,8 +25,8 @@ services:
     depends_on:
       rabbitmq:
         condition: service_healthy
-    # volumes:
-    #   - ./items.json:/app/order/items.json
+    volumes:
+      - ./items.json:/app/order/items.json
     environment:
       APP_PORT: ${APP_PORT_CASHIER}
       RABBIT_URL: "amqp://guest:guest@rabbitmq:5672/"
